@@ -1,0 +1,46 @@
+---
+title: "assignment04"
+author: "youngzerro"
+date: "5/22/2021"
+format: 
+  html:
+    code-fold: true
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+data <- read.csv("data/data.csv")
+
+names(data)
+
+
+# Plot the relationship between Base MSRP and Electric Range
+ggplot(data, aes(x = `Base.MSRP`, y = `Electric.Range`)) +
+  geom_point() +
+  labs(title = "1.Electric Vehicle Sales", subtitle = "Base MSRP vs. Electric Range",
+       x = "Base MSRP", y = "Electric Range")
+
+# Plot the total count of vehicles by Model Year
+year_counts <- data %>% count(`Model.Year`)
+ggplot(year_counts, aes(x = `Model.Year`, y = n, group = 1)) +
+  geom_line() +
+  labs(title = "2. Electric Vehicle Sales", subtitle = "Total Vehicle Counts by Model Year",
+       x = "Model Year", y = "Count")
+
+# Plot the distribution of Base MSRP by Electric Vehicle Type
+ggplot(data, aes(x = `Electric.Vehicle.Type`, y = `Base.MSRP`)) +
+  geom_boxplot() +
+  labs(title = "3. Electric Vehicle Sales", subtitle = "Base MSRP Distribution by Electric Vehicle Type",
+       x = "Electric Vehicle Type", y = "Base MSRP")
+
+
+
+ggplot(data, aes(x = `Base.MSRP`, y = ..density..)) +
+  geom_histogram(binwidth = 10000, color = "#e9ecef", fill = "#69b3a2") +
+  scale_x_continuous(name = "Base MSRP ($)", limits = c(0, 120000), breaks = seq(0, 120000, 20000)) +
+  scale_y_continuous(name = "Density") +
+  labs(title = "4. Distribution of Base MSRP", subtitle = "Data Source: Electric Vehicles Dataset")
+
+```
